@@ -1,8 +1,8 @@
 <?php
 global $con;
 $dsn = 'mysql:host=localhost;dbname=school';
-$user= 'moslem';
-$password = 'moslem123';
+$user= 'root';
+$password = '';
 $options = array(
   PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
 );

@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 22, 2020 at 01:05 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.2
+-- Host: localhost
+-- Generation Time: Jan 12, 2022 at 12:55 PM
+-- Server version: 8.0.27-0ubuntu0.20.04.1
+-- PHP Version: 8.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -29,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `app_classes` (
-  `class_id` int(11) UNSIGNED NOT NULL,
+  `class_id` int UNSIGNED NOT NULL,
   `name` varchar(36) NOT NULL,
   `division` varchar(23) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `app_classes`
@@ -48,18 +47,17 @@ INSERT INTO `app_classes` (`class_id`, `name`, `division`) VALUES
 --
 
 CREATE TABLE `app_classes_material` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `class_id` int(11) UNSIGNED NOT NULL,
-  `material_id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int UNSIGNED NOT NULL,
+  `class_id` int UNSIGNED NOT NULL,
+  `material_id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `app_classes_material`
 --
 
 INSERT INTO `app_classes_material` (`id`, `class_id`, `material_id`, `user_id`) VALUES
-(3, 2, 3, 8),
 (4, 2, 1, 6);
 
 -- --------------------------------------------------------
@@ -69,10 +67,10 @@ INSERT INTO `app_classes_material` (`id`, `class_id`, `material_id`, `user_id`) 
 --
 
 CREATE TABLE `app_material` (
-  `material_id` int(11) UNSIGNED NOT NULL,
+  `material_id` int UNSIGNED NOT NULL,
   `material` varchar(36) NOT NULL,
   `about` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `app_material`
@@ -93,24 +91,24 @@ INSERT INTO `app_material` (`material_id`, `material`, `about`) VALUES
 --
 
 CREATE TABLE `app_students` (
-  `student_id` int(11) UNSIGNED NOT NULL,
-  `national_id` int(20) UNSIGNED NOT NULL,
+  `student_id` int UNSIGNED NOT NULL,
+  `national_id` int UNSIGNED NOT NULL,
   `first_name` varchar(24) NOT NULL,
   `last_name` varchar(24) NOT NULL,
   `email` varchar(60) NOT NULL,
-  `class_id` int(11) UNSIGNED NOT NULL,
-  `has_users` int(11) UNSIGNED DEFAULT NULL,
+  `class_id` int UNSIGNED NOT NULL,
+  `has_users` int UNSIGNED DEFAULT NULL,
   `created_at` date NOT NULL,
   `updated_at` date DEFAULT NULL,
   `logout_at` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `app_students`
 --
 
 INSERT INTO `app_students` (`student_id`, `national_id`, `first_name`, `last_name`, `email`, `class_id`, `has_users`, `created_at`, `updated_at`, `logout_at`) VALUES
-(1, 4294967295, 'ali', 'zeyad', 'aliahmad@gmail.com', 2, 3, '2020-04-02', NULL, NULL);
+(1, 4294967295, 'ali', 'zeyad', 'aliahmad@gmail.com', 2, NULL, '2020-04-02', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -119,16 +117,16 @@ INSERT INTO `app_students` (`student_id`, `national_id`, `first_name`, `last_nam
 --
 
 CREATE TABLE `app_students_profiles` (
-  `student_id` int(11) UNSIGNED NOT NULL,
+  `student_id` int UNSIGNED NOT NULL,
   `address` varchar(50) NOT NULL,
   `pob` varchar(50) NOT NULL,
   `dob` date NOT NULL,
   `gender` enum('male','female') NOT NULL,
   `nationalty` varchar(24) NOT NULL,
   `responsble` enum('mother','father','teacher') NOT NULL,
-  `responsible_phone` int(15) NOT NULL,
+  `responsible_phone` int NOT NULL,
   `responsible_job` varchar(36) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `app_students_profiles`
@@ -144,28 +142,26 @@ INSERT INTO `app_students_profiles` (`student_id`, `address`, `pob`, `dob`, `gen
 --
 
 CREATE TABLE `app_users` (
-  `user_id` int(11) UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
   `username` varchar(60) NOT NULL,
   `email` varchar(60) NOT NULL,
   `password` varchar(60) NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(30) NOT NULL,
-  `group_id` tinyint(3) UNSIGNED NOT NULL,
+  `group_id` tinyint UNSIGNED NOT NULL,
   `status` enum('active','pending','disabled','') NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date DEFAULT NULL,
   `last_login` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `app_users`
 --
 
 INSERT INTO `app_users` (`user_id`, `username`, `email`, `password`, `first_name`, `last_name`, `group_id`, `status`, `created_at`, `updated_at`, `last_login`) VALUES
-(3, 'moslem', 'moslem@gmail.com', '$2a$07$yeNCSNwRpYopOhv0TrrReOTF7T/DenCJpSDRToDBOX7ZBEqfd.CVe', 'Zeyad', 'Moslem', 1, 'active', '2020-03-03', NULL, NULL),
-(5, 'hadeel123', 'almadihaeel@gmail.com', '$2a$07$yeNCSNwRpYopOhv0TrrReOTF7T/DenCJpSDRToDBOX7ZBEqfd.CVe', 'hadeel', 'Almadi', 3, 'active', '2020-03-06', NULL, NULL),
 (6, 'zeyad_teacher', 'z_teacher@gmail.com', '$2a$07$yeNCSNwRpYopOhv0TrrReOTF7T/DenCJpSDRToDBOX7ZBEqfd.CVe', 'zeyad', 'teacher', 5, 'active', '2020-03-17', NULL, NULL),
-(8, 'hadeel_teacher', 'hadeelhamad@gmail.com', '$2a$07$yeNCSNwRpYopOhv0TrrReO.EVbKiK/d8vzsPTNWgCX2yIvApKjaaa', 'hadeel', 'teacher', 5, 'active', '2020-03-17', '2020-03-19', NULL);
+(10, 'admin', 'admin@test.com', '$2a$07$yeNCSNwRpYopOhv0TrrReOfePkToEwmNKagsCYcwX3XoXYyElzR7y', 'Tanisha', 'Preston', 1, 'active', '2022-01-12', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -174,10 +170,10 @@ INSERT INTO `app_users` (`user_id`, `username`, `email`, `password`, `first_name
 --
 
 CREATE TABLE `app_users_groups` (
-  `group_id` tinyint(3) UNSIGNED NOT NULL,
+  `group_id` tinyint UNSIGNED NOT NULL,
   `group_title_en` varchar(100) NOT NULL,
   `group_title_ar` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `app_users_groups`
@@ -195,10 +191,10 @@ INSERT INTO `app_users_groups` (`group_id`, `group_title_en`, `group_title_ar`) 
 --
 
 CREATE TABLE `app_users_groups_privileges` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `privilege_id` tinyint(3) UNSIGNED NOT NULL,
-  `group_id` tinyint(3) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int UNSIGNED NOT NULL,
+  `privilege_id` tinyint UNSIGNED NOT NULL,
+  `group_id` tinyint UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `app_users_groups_privileges`
@@ -260,11 +256,11 @@ INSERT INTO `app_users_groups_privileges` (`id`, `privilege_id`, `group_id`) VAL
 --
 
 CREATE TABLE `app_users_privileges` (
-  `privilege_id` tinyint(3) UNSIGNED NOT NULL,
+  `privilege_id` tinyint UNSIGNED NOT NULL,
   `privilege_path` varchar(100) NOT NULL,
   `privilege_title_en` varchar(100) NOT NULL,
   `privilege_title_ar` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `app_users_privileges`
@@ -312,7 +308,7 @@ INSERT INTO `app_users_privileges` (`privilege_id`, `privilege_path`, `privilege
 --
 
 CREATE TABLE `app_users_profiles` (
-  `user_id` int(11) UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
   `specialty` varchar(60) NOT NULL,
   `city` varchar(60) NOT NULL,
   `address` varchar(60) NOT NULL,
@@ -320,17 +316,15 @@ CREATE TABLE `app_users_profiles` (
   `dob` date NOT NULL,
   `about` varchar(255) NOT NULL,
   `image` varchar(60) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `app_users_profiles`
 --
 
 INSERT INTO `app_users_profiles` (`user_id`, `specialty`, `city`, `address`, `phone`, `dob`, `about`, `image`) VALUES
-(3, 'web ', 'gera ', 'hussstr.13', '0123456789', '2020-03-03', 'this is new user  ', NULL),
-(5, 'computer science', 'Arbid', 'Arbid/kyremah', '0795467832', '2020-03-11', 'this new user', NULL),
 (6, 'History', 'gera', 'gera', '012345678', '2020-03-24', 'this is teacher one', NULL),
-(8, 'computer science', 'Arbid', 'Arbid/kyremah', '98765437889', '2020-03-15', 'this is  tow teacher', NULL);
+(10, 'Voluptate voluptatum', 'Lorem voluptates vol', 'Quidem beatae dolori', '016055584', '1991-09-19', 'Aut voluptatem dolo', NULL);
 
 --
 -- Indexes for dumped tables
@@ -413,61 +407,61 @@ ALTER TABLE `app_users_profiles`
 -- AUTO_INCREMENT for table `app_classes`
 --
 ALTER TABLE `app_classes`
-  MODIFY `class_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `class_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `app_classes_material`
 --
 ALTER TABLE `app_classes_material`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `app_material`
 --
 ALTER TABLE `app_material`
-  MODIFY `material_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `material_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `app_students`
 --
 ALTER TABLE `app_students`
-  MODIFY `student_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `student_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `app_students_profiles`
 --
 ALTER TABLE `app_students_profiles`
-  MODIFY `student_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `student_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `app_users`
 --
 ALTER TABLE `app_users`
-  MODIFY `user_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `app_users_groups`
 --
 ALTER TABLE `app_users_groups`
-  MODIFY `group_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `group_id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `app_users_groups_privileges`
 --
 ALTER TABLE `app_users_groups_privileges`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `app_users_privileges`
 --
 ALTER TABLE `app_users_privileges`
-  MODIFY `privilege_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `privilege_id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `app_users_profiles`
 --
 ALTER TABLE `app_users_profiles`
-  MODIFY `user_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
